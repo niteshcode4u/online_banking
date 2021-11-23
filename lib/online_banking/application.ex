@@ -14,10 +14,9 @@ defmodule OnlineBanking.Application do
       OnlineBankingWeb.Telemetry,
       # Start the PubSub system
       {Phoenix.PubSub, name: OnlineBanking.PubSub},
-      # Start the Endpoint (http/https)
-      OnlineBankingWeb.Endpoint
-      # Start a worker by calling: OnlineBanking.Worker.start_link(arg)
-      # {OnlineBanking.Worker, arg}
+      OnlineBankingWeb.Endpoint,
+      {OnlineBanking.Account.UserManager, []},
+      {OnlineBanking.Account.TransactionManager, []}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

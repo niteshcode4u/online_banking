@@ -17,7 +17,7 @@ defmodule OnlineBankingWeb.Router do
   scope "/", OnlineBankingWeb do
     pipe_through :browser
 
-    get "/", PageController, :index
+    live "/", PageLive
   end
 
   # Other scopes may use custom stacks.
