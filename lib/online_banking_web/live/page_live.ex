@@ -35,12 +35,9 @@ defmodule OnlineBankingWeb.PageLive do
   def handle_event("deposit", %{"deposit_amount" => amount}, socket) do
     socket = clear_flash(socket)
 
-    with {amount, _} <- Float.parse(amount),
-         {:ok, curr_user} <- OnlineBanking.deposit_money(amount, socket.assigns.current_user) do
-      {:noreply, assign(socket, current_user: curr_user)}
-    else
-      :error ->
-        {:noreply, put_flash(socket, :error, "Invalid amount or type")}
+    case OnlineBanking.deposit_money(amount, socket.assigns.current_user) do
+      {:ok, curr_user} -> {:noreply, assign(socket, current_user: curr_user)}
+      {:error, error} -> {:noreply, put_flash(socket, :error, error)}
     end
   end
 
@@ -48,15 +45,9 @@ defmodule OnlineBankingWeb.PageLive do
   def handle_event("withdraw", %{"withdraw_amount" => amount}, socket) do
     socket = clear_flash(socket)
 
-    with {amount, _} <- Float.parse(amount),
-         {:ok, curr_user} <- OnlineBanking.withdraw_money(amount, socket.assigns.current_user) do
-      {:noreply, assign(socket, current_user: curr_user)}
-    else
-      :error ->
-        {:noreply, put_flash(socket, :error, "Invalid amount or type")}
-
-      {:error, message} ->
-        {:noreply, put_flash(socket, :error, message)}
+    case OnlineBanking.withdraw_money(amount, socket.assigns.current_user) do
+      {:ok, curr_user} -> {:noreply, assign(socket, current_user: curr_user)}
+      {:error, error} -> {:noreply, put_flash(socket, :error, error)}
     end
   end
 end

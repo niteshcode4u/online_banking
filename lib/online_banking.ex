@@ -16,7 +16,8 @@ defmodule OnlineBanking do
         Example
 
         iex> OnlineBanking.create_user("nitesh mishra", "nitesh", "password")
-        {:ok,
+
+        This will return {:ok,
           %OnlineBanking.Helpers.User{
             account_number: 40106,
             balance: 0.0,
@@ -24,7 +25,7 @@ defmodule OnlineBanking do
             password: "password",
             transactions: [],
             user_name: "nitesh"
-          }}
+        }}
   """
 
   def create_user(full_name, user_name, password) do
@@ -50,7 +51,7 @@ defmodule OnlineBanking do
          user <- add_transactions(user) do
       {:ok, user}
     else
-      [] -> {:error, "Invalid username"}
+      [] -> {:error, "Invalid account number"}
     end
   end
 
@@ -60,27 +61,35 @@ defmodule OnlineBanking do
          user <- add_transactions(user) do
       {:ok, user}
     else
-      [] -> {:error, "Invalid account number"}
+      [] -> {:error, "Invalid username"}
     end
   end
 
   def deposit_money(amount, current_user) do
-    current_user.account_number
-    |> TransactionManager.new(amount, :deposit)
-    |> List.first()
-    |> get_updated_current_user()
-  end
-
-  def withdraw_money(amount, current_user) do
-    case current_user.balance >= amount do
-      true ->
+    amount
+    |> Float.parse()
+    |> case do
+      {amount, _} ->
         current_user.account_number
-        |> TransactionManager.new(amount, :withdraw)
+        |> TransactionManager.new(amount, :deposit)
         |> List.first()
         |> get_updated_current_user()
 
-      false ->
-        {:error, "Insufficient balance"}
+      :error ->
+        {:error, "Invalid amount or type"}
+    end
+  end
+
+  def withdraw_money(amount, current_user) do
+    with {amount, _} <- Float.parse(amount),
+         true <- current_user.balance >= amount do
+      current_user.account_number
+      |> TransactionManager.new(amount, :withdraw)
+      |> List.first()
+      |> get_updated_current_user()
+    else
+      :error -> {:error, "Invalid amount or type"}
+      false -> {:error, "Insufficient balance"}
     end
   end
 
