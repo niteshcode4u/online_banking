@@ -17,7 +17,7 @@ defmodule OnlineBanking.Helpers.User do
       full_name: full_name,
       user_name: username,
       password: password,
-      account_number: Enum.random(11111..99999),
+      account_number: Enum.random(11_111..99_999),
       balance: 0.0,
       transactions: []
     }

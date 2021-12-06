@@ -1,4 +1,7 @@
 defmodule OnlineBanking.Helpers.Transaction do
+  @moduledoc """
+  Module to handle transactions for the accounts
+  """
   @type t :: %__MODULE__{}
   @enforce_keys ~w(account_number amount transction_type entry_time)a
 

@@ -1,4 +1,7 @@
 defmodule OnlineBankingWeb.PageLive do
+  @moduledoc """
+  Module to handle live actions
+  """
   use OnlineBankingWeb, :live_view
 
   @impl Phoenix.LiveView
