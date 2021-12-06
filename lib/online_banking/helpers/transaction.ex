@@ -15,8 +15,10 @@ defmodule OnlineBanking.Helpers.Transaction do
       entry_time: add_timestamp()
     }
 
+    OnlineBanking.Account.UserManager.update_balance(transction_type, amount, account_number)
+
     [struct!(__MODULE__, fields) | state]
   end
 
-  defp add_timestamp(), do: DateTime.utc_now()
+  defp add_timestamp(), do: to_string(DateTime.utc_now())
 end

@@ -34,8 +34,8 @@ button,
 input[type=button],
 input[type=reset],
 input[type=submit] {
-  background-color: #0069d9;
-  border: 0.1rem solid #0069d9;
+  background-color: #109cc7;
+  border: 0.1rem solid #64acdb;
   border-radius: .4rem;
   color: #fff;
   cursor: pointer;
@@ -733,4 +733,62 @@ header nav a {
   color: black;
   text-decoration: none;
   cursor: pointer;
+}
+#customers {
+  font-family:
+    "Trebuchet MS",
+    Arial,
+    Helvetica,
+    sans-serif;
+  border-collapse:;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+#customers td,
+#customers th {
+  border: 1px solid rgb(188, 209, 202);
+  padding: 8px;
+}
+#customers tr:nth-child(even) {
+  background-color: #0890b9;
+}
+#customers tr:hover {
+  background-color: #c8d6cc;
+}
+#customers th {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  text-align: left;
+  background-color: #0890b9;
+  color: white;
+}
+#transactions {
+  font-family:
+    "Trebuchet MS",
+    Arial,
+    Helvetica,
+    sans-serif;
+  border-collapse:;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+#transactions td,
+#transactions th {
+  border: 1px solid rgb(97, 60, 42);
+  padding: 8px;
+}
+#transactions tr:nth-child(even) {
+  background-color: #f1eeea;
+}
+#transactions tr:hover {
+  background-color: #eed1a8;
+}
+#transactions th {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  text-align: left;
+  background-color: #ee6f6f;
+  color: white;
 }

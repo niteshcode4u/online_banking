@@ -1,8 +1,71 @@
+<!DOCTYPE html>
 <html>
-    <head>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-    </head>
     <body>
-        
+        <%= if is_nil(@current_user) do %>
+            <form phx-submit="sign_in">
+                <label>Username:</label> <input type="text" placeholder="Enter Username" name="username" required>
+                <label>Password : </label>
+                <input type="password" placeholder="Enter Password" name="password" required>
+                <button type="submit">Login</button>
+            </form>
+        <% else %>
+            <table id="customers">
+                <thead>
+                    <tr>
+                        <th>Customer Name</th>
+                        <th>Username</th>
+                        <th>Account Number</th>
+                        <th>Balance</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><%= @current_user.full_name %></td>
+                        <td><p><%= @current_user.user_name %></p></td>
+                        <td><p><%= @current_user.account_number %></p></td>
+                        <td><p><%= @current_user.balance %></p></td>
+                        <td><input type="button" value="Logout" phx-click="sign_out" /></td>
+                    </tr>
+                </tbody>
+            </table>
+            <br>
+            <table>
+                <tbody>
+                    <tr>
+                        <td>
+                            <form phx-submit="deposit">
+                                <input type="text" name="deposit_amount" placeholder="Enter amount to deposit" required>
+                                <button>Deposit Money</button>
+                            </form>
+                        </td>
+                        <td>
+                            <form phx-submit="withdraw">
+                                <input type="text" name="withdraw_amount" placeholder="Enter amount to withdraw" required>
+                                <button>Withdraw Money</button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table> 
+            <table id="transactions">
+                <thead>
+                    <tr>
+                        <th>Transaction time</th>
+                        <th>Transaction type</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <%= for transaction <- @current_user.transactions do %>
+                        <tr>
+                            <td><p><%= transaction.entry_time %></p></td>
+                            <td><p><%= transaction.transction_type %></p></td>
+                            <td><p><%= transaction.amount %></p></td>
+                        </tr>
+                    <% end %>
+                </tbody>
+            </table>
+        <% end %>
     </body>
 </html>

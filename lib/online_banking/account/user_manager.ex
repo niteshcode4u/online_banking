@@ -24,6 +24,10 @@ defmodule OnlineBanking.Account.UserManager do
     GenServer.call(manager, {:create, full_name, username, password})
   end
 
+  def update_balance(manager \\ __MODULE__, operation, balance, account_number) do
+    GenServer.call(manager, {:update_balance, operation, balance, account_number})
+  end
+
   ###############################################################################
   #######################           Call handlers           #####################
   ###############################################################################
@@ -35,6 +39,13 @@ defmodule OnlineBanking.Account.UserManager do
   @impl GenServer
   def handle_call({:create, full_name, username, password}, _from, state) do
     {_status, user, new_state} = User.create(state, full_name, username, password)
+
+    {:reply, user, new_state}
+  end
+
+  @impl GenServer
+  def handle_call({:update_balance, operation, amount, account_number}, _from, state) do
+    {_status, user, new_state} = User.update_balance(state, operation, amount, account_number)
 
     {:reply, user, new_state}
   end
